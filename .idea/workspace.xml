@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="c5d2a5ab-7bb5-410c-b38b-dbce97107416" name="默认的" comment="" />
+    <list default="true" id="c5d2a5ab-7bb5-410c-b38b-dbce97107416" name="默认的" comment="">
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/my page.html" />
+    </list>
     <ignored path="rdogle.github.com.iws" />
     <ignored path=".idea/workspace.xml" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -21,8 +23,8 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="index.html" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/index.html">
+      <file leaf-file-name="my page.html" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/my page.html">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.3744681">
               <caret line="11" column="29" selection-start-line="11" selection-start-column="29" selection-end-line="11" selection-end-column="29" />
@@ -47,8 +49,8 @@
     <option name="CHANGED_PATHS">
       <list>
         <option value="$PROJECT_DIR$/gerenzhan.html" />
-        <option value="$PROJECT_DIR$/my page.html" />
         <option value="$PROJECT_DIR$/index.html" />
+        <option value="$PROJECT_DIR$/my page.html" />
       </list>
     </option>
   </component>
@@ -191,7 +193,7 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/index.html">
+    <entry file="file://$PROJECT_DIR$/my page.html">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.3744681">
           <caret line="11" column="29" selection-start-line="11" selection-start-column="29" selection-end-line="11" selection-end-column="29" />
