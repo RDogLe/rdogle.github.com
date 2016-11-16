@@ -1,0 +1,197 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>wish</title>
+    <link rel="stylesheet" href="Css/index.css" />
+    <script src="ajax.js"></script>
+    <script>
+        function rnd(n,m){
+            return Math.floor(Math.random()*(m-n)+n);
+        }
+        function toDou(iNum){
+            return iNum<10?'0'+iNum:''+iNum;
+        }
+        function getYearTime(ms){
+            var oDate = new Date();
+            oDate.setTime(ms);
+
+            return oDate.getFullYear()+'-'+toDou(oDate.getMonth()+1)+'-'+toDou(oDate.getDate())+' '+toDou(oDate.getHours())+':'+toDou(oDate.getMinutes())+':'+toDou(oDate.getSeconds());
+        }
+        function drag(obj){
+            obj.onmousedown = function(ev){
+                var oEvent = ev||event;
+                var disX = oEvent.clientX-obj.offsetLeft;
+                var disY = oEvent.clientY-obj.offsetTop;
+                document.onmousemove = function(ev){
+                    var oEvent = ev||event;
+                    obj.style.left = oEvent.clientX-disX+'px';
+                    obj.style.top = oEvent.clientY-disY+'px';
+                };
+                document.onmouseup = function(){
+                    document.onmousemove = null;
+                    document.onmouseup = null;
+                    obj.releaseCapture&&obj.releaseCapture();
+                };
+                obj.setCapture&&obj.setCapture();
+                return false;
+            };
+        }
+        window.onload = function(){
+            var oSend = document.getElementById('send');
+            var oSendForm = document.getElementById('send-form');
+            var oClose = document.getElementById('close');
+
+            var oUser = document.getElementById('username');
+            var oContent = document.getElementById('content');
+            var oSendBtn = document.getElementById('send-btn');
+
+            var oMain = document.getElementById('main');
+
+            var URL = 'wish.php';
+
+
+            oSend.onclick = function(){
+                oSendForm.style.display = 'block';
+                oSendForm.style.left = '50%';
+                oSendForm.style.marginLeft = -oSendForm.offsetWidth/2+'px';
+            };
+            oClose.onclick = function(){
+                oSendForm.style.display = 'none';
+            };
+
+            oSendBtn.onclick = function(){
+                if(oUser.value==''||oContent.value==''){
+                    alert('昵称和愿望不能为空');
+                    return;
+                }
+                ajax({
+                    url:URL,
+                    data:{
+                        "act":"add",
+                        "username":oUser.value,
+                        "content":oContent.value
+                    },
+                    success:function(res){
+                        var json = eval('('+res+')');
+
+                        if(json.error==0){
+                            alert(json.msg);
+
+                            getAllWish();
+
+                            oUser.value = '';
+                            oContent.value = '';
+                            oSendForm.style.display='none';
+                        }else{
+                            alert('失败:'+json.msg);
+                        }
+                    },
+                    error:function(err){
+                        console.log('错误:'+err);
+                    }
+                });
+            };
+
+            function createWish(id,user,content,time){
+                var oDl = document.createElement('dl');
+                oDl.className = 'paper a'+(id%5+1);
+                oDl.innerHTML = '<dt>'+
+                        '<span class="username">'+user+'</span>'+
+                        '<span class="num">No.'+id+'</span>'+
+                        '</dt>'+
+                        '<dd class="content">'+content+'</dd>'+
+                        '<dd class="bottom">'+
+                        '<span class="time">'+getYearTime(time*1000)+'</span>'+
+                        '<a href="javascript:;" class="close"></a>'+
+                        '</dd>';
+
+                oMain.appendChild(oDl);
+                drag(oDl);
+                var oDel = oDl.getElementsByTagName('a')[0];
+                oDel.onclick = function(){
+                    var result = confirm('您确定要删除此条愿望吗？');
+                    if(result){
+                        ajax({
+                            url:URL,
+                            data:{
+                                "act":"delete",
+                                "id":id
+                            },
+                            success:function(res){
+                                var json = eval('('+res+')');
+                                if(json.error==0){
+                                    alert('成功:'+json.msg);
+                                    oMain.removeChild(oDel.parentNode.parentNode);
+                                }else{
+                                    alert('失败:'+json.msg);
+                                }
+                            },
+                            error:function(err){
+                                console.log('错误:'+err);
+                            }
+                        });
+                    }
+                };
+
+                oDl.style.left = rnd(0,(document.documentElement.clientWidth-oDl.offsetWidth))+'px';
+                oDl.style.top = rnd(0,(document.documentElement.clientHeight-126-oDl.offsetHeight))+'px';
+            }
+
+            function getAllWish(){
+                ajax({
+                    url:URL,
+                    data:{
+                        "act":"get"
+                    },
+                    success:function(res){
+                        var json = eval('('+res+')');
+                        if(json.error==0){
+                            var arr = json.msg;
+                            oMain.innerHTML = '';
+                            for(var i=0;i<arr.length;i++){
+                                createWish(arr[i].id,arr[i].username,arr[i].content,arr[i].time);
+                            }
+
+                        }else{
+                            alert('失败:'+json.msg);
+                        }
+                    },
+                    error:function(err){
+                        console.log('错误:'+err);
+                    }
+                });
+            }
+            getAllWish();
+        };
+    </script>
+</head>
+<body>
+<div id='top'>
+    <span id='send'></span>
+</div>
+<div id='main'>
+</div>
+
+<div id='send-form'>
+    <p class='title'><span>许下你的愿望</span><a href="javascript:;" id='close'></a></p>
+    <form action="" name='wish'>
+        <p>
+            <label for="username">昵称：</label>
+            <input type="text" name='username' id='username'/>
+        </p>
+        <p>
+            <label for="content">愿望：(您还可以输入&nbsp;<span id='font-num'>50</span>&nbsp;个字)</label>
+            <textarea name="content" id='content'></textarea>
+        </p>
+        <span id='send-btn'></span>
+    </form>
+</div>
+<!--[if IE 6]>
+<script type="text/javascript" src="./Js/iepng.js"></script>
+<script type="text/javascript">
+    DD_belatedPNG.fix('#send,#close,.close','background');
+</script>
+<![endif]-->
+</body>
+</html>
