@@ -52,7 +52,6 @@
     background-size:100%;
 }
 .content-1{
-    height: 7.3rem;
     background: #fafafa;
     display: flex;
     padding: 0 1rem;
@@ -68,41 +67,39 @@
     flex: 1;
     line-height: 1.2rem;
 }
+.control{
+    width: 3rem;
+    height: 3rem;
+    margin: 0 auto;
+}
+.intr-svg{
+    width: 3rem;
+    height: 2rem;
+    margin-bottom: 0.6rem;
+}
+.content-1 a:nth-child(2) svg{
+    width: 3rem;
+    height: 1.6rem;
+    margin-top: 0.2rem;
+    margin-bottom: 0.6rem;
+}
+.content-1 a:nth-child(3) svg{
+    width: 3rem;
+    height: 2rem;
+    margin-top: -0.1rem;
+    margin-bottom: 0.6rem;
+}
+.content-1 a:nth-child(4) svg{
+    width: 3rem;
+    height: 1.7rem;
+    margin-top: 0.2rem;
+    margin-bottom: 0.6rem;
+}
 .active .intr-svg .st0{
     fill: #e10d23;
 }
-.content-1 a:nth-child(1) svg{
-    width: 100%;
-    height: 1.35rem;
-    text-align: center;
-}
-.content-1 a:nth-child(2) svg{
-    width: 100%;
-    height: 1.25rem;
-    text-align: center;
-}
-.content-1 a:nth-child(3) svg{
-    width: 100%;
-    height: 1.4rem;
-    text-align: center;
-}
-.content-1 a:nth-child(4) svg{
-    width: 100%;
-    height: 1.35rem;
-    text-align: center;
-}
 .content-1 span{
-    width: 100%;
-    height: 0.575rem;
-    margin-top: 0.9rem;
-    text-align: center;
-}
-.content-1 p{
-    width: 100%;
-    text-align: center;
-}
-.content-1 a:nth-child(2) span{
-    margin-top: 0.925rem;
+    display: block;
 }
 .tabs-title {
     font-size: 1.25rem;
